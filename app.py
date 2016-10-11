@@ -65,7 +65,7 @@ def info():
             <li>Valid email addresses are:
             nick.gravgaard@example.com
             shane.edwards@example.com and
-            fireman.sam@example.com
+            david.carboni@example.com
             </li>
             <li>Make a note of the returned token and pass it in a "token" header for other requests.</li>
             <li>Try GET or POST to <a href="/profile">/profile</a></li>
