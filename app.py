@@ -61,7 +61,7 @@ class User(db.Model):
 def info():
     return """
         </ul>
-            <li>Try POST to <a href="/login">/login</a> or <a href="/code">/code</a></li>
+            <li>Try POST to <a href="/login">/login</a></li>
             <li>Valid email addresses are:
             nick.gravgaard@example.com
             shane.edwards@example.com",
