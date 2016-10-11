@@ -13,8 +13,11 @@ app = Flask(__name__)
 # Enable cross-origin requests
 CORS(app)
 
-# Set up the database
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////tmp/ons.db'
+# Set up the database, using configuration if available:
+database_url = os.environ["DATABASE_URL"]
+if not database_url:
+    database_url = "sqlite:////tmp/ons.db"
+app.config['SQLALCHEMY_DATABASE_URI'] = database_url
 db = SQLAlchemy(app)
 
 
