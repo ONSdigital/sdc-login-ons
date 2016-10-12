@@ -18,7 +18,7 @@ database_url = os.environ["DATABASE_URL"]
 if not database_url:
     database_url = "sqlite:////tmp/ons.db"
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-db = SQLAlchemy(app)
+db = None
 
 
 # User model
@@ -170,8 +170,8 @@ def validate_token(token):
 
 def create_database():
 
-    print("Dropping tables...")
-    db.drop_all()
+    #print("Dropping tables...")
+    #db.drop_all()
     print("Creating tables...")
     db.create_all()
     print("Done")
