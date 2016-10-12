@@ -222,7 +222,7 @@ if __name__ == '__main__':
     # Start server
     print("Getting port...")
     port = int(os.environ.get("PORT", 5000))
-    print("Port is " + port)
+    print("Port is " + str(port))
     print("running...")
     app.run(debug=True, host='0.0.0.0', port=port)
 
