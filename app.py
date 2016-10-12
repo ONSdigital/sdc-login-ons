@@ -170,8 +170,11 @@ def validate_token(token):
 
 def create_database():
 
+    print("Dropping tables...")
     db.drop_all()
+    print("Creating tables...")
     db.create_all()
+    print("Done")
 
 
 def create_users():
