@@ -213,10 +213,16 @@ def create_users():
 if __name__ == '__main__':
 
     # Create database
+    print("creating database")
     create_database()
+    print("creating users")
     create_users()
+    print("End of setup")
 
     # Start server
+    print("Getting port...")
     port = int(os.environ.get("PORT", 5000))
+    print("Port is " + port)
+    print("running...")
     app.run(debug=True, host='0.0.0.0', port=port)
 
