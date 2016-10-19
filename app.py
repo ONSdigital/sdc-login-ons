@@ -14,11 +14,12 @@ app = Flask(__name__)
 CORS(app)
 
 # Set up the database, using configuration if available:
-database_url = os.environ["DATABASE_URL"]
-if not database_url:
+if "DATABASE_URL" in os.environ:
+    database_url = os.environ["DATABASE_URL"]
+else:
     database_url = "sqlite:////tmp/ons.db"
 app.config['SQLALCHEMY_DATABASE_URI'] = database_url
-db = None
+db = SQLAlchemy(app)
 
 
 # User model
