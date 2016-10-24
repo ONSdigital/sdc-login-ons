@@ -196,6 +196,41 @@ def create_users():
             "user_id": "103",
             "email": "david.carboni@example.com",
             "name": "David Carboni",
+        },
+        {
+            "user_id": "104",
+            "email": "nic.price@example.com",
+            "name": "Nic Price",
+        },
+        {
+            "user_id": "105",
+            "email": "rich.ingram@example.com",
+            "name": "Rich Ingram",
+        },
+        {
+            "user_id": "106",
+            "email": "tom.underwood@example.com",
+            "name": "Tom Underwood",
+        },
+        {
+            "user_id": "107",
+            "email": "rachel.williams@example.com",
+            "name": "Rachel Williams",
+        },
+        {
+            "user_id": "108",
+            "email": "nige.sedgwich@example.com",
+            "name": "Nige Sedgwick",
+        },
+        {
+            "user_id": "109",
+            "email": "simon.houghton@example.com",
+            "name": "Simon Houghton",
+        },
+        {
+            "user_id": "110",
+            "email": "rob.kent@example.com",
+            "name": "Rob Kent",
         }
     ]
     for user in users:
@@ -229,4 +264,3 @@ if __name__ == '__main__':
     print("Port is " + str(port))
     print("running...")
     app.run(debug=True, host='0.0.0.0', port=port)
-
