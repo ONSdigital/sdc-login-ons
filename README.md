@@ -22,3 +22,9 @@ A user profile contains the following information:
 | user_id        |
 | name           |
 | email          |
+
+## Links
+
+Try:
+ * [https://sdc-login-ons.herokuapp.com/](https://sdc-login-ons.herokuapp.com/)
+ * [https://sdc-login-ons.herokuapp.com/VS](https://sdc-login-ons.herokuapp.com/VS)
