@@ -2,7 +2,7 @@ from json import loads, dumps
 from decoder import get_json
 import unittest
 from app import app
-from app import create_database, create_users
+from app import recreate_database, create_users
 from jwt import encode
 
 
@@ -159,7 +159,7 @@ if __name__ == '__main__':
 
     # Create database
     print("creating database")
-    create_database()
+    recreate_database()
     print("creating users")
     create_users()
     print("End of setup")

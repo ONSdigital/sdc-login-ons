@@ -5,26 +5,27 @@ from jwt import encode, decode
 from jose.exceptions import JWSError
 from passlib.context import CryptContext
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, DDL, Integer, String, event
 
+# service name (initially used for sqlite file name and schema name)
+SERVICE_NAME = 'sdc-login-ons'
+ENVIRONMENT_NAME = os.getenv('ENVIRONMENT_NAME', 'dev')
 
 app = Flask(__name__)
 
 # Enable cross-origin requests
 CORS(app)
 
-# Set up the database, using configuration if available:
-if "DATABASE_URL" in os.environ:
-    database_url = os.environ["DATABASE_URL"]
-else:
-    database_url = "sqlite:////tmp/ons.db"
-app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+# Set up the database
+app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI', 'sqlite:////tmp/{}.db'.format(SERVICE_NAME))
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
+SCHEMA_NAME = None if app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite') else '{}_{}'.format(ENVIRONMENT_NAME, SERVICE_NAME)
 
 
 # User model
 class User(db.Model):
-
+    __table_args__ = {'schema': SCHEMA_NAME}
     # Columns
     id = Column(Integer, primary_key=True)
     user_id = Column(String(10))
@@ -169,13 +170,14 @@ def validate_token(token):
             return ""
 
 
-def create_database():
-
-    #print("Dropping tables...")
-    #db.drop_all()
-    print("Creating tables...")
+def recreate_database():
+    if SCHEMA_NAME:
+        sql = ('DROP SCHEMA IF EXISTS "{0}" CASCADE;'
+               'CREATE SCHEMA IF NOT EXISTS "{0}"'.format(SCHEMA_NAME))
+        event.listen(db.Model.metadata, 'before_create', DDL(sql))
+    else:
+        db.drop_all()
     db.create_all()
-    print("Done")
 
 
 def create_users():
@@ -253,7 +255,7 @@ if __name__ == '__main__':
 
     # Create database
     print("creating database")
-    create_database()
+    recreate_database()
     print("creating users")
     create_users()
     print("End of setup")
