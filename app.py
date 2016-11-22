@@ -5,7 +5,7 @@ from jwt import encode, decode
 from jose.exceptions import JWSError
 from passlib.context import CryptContext
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, DDL, Integer, String, event
+from sqlalchemy import Column, Integer, String
 
 # service name (initially used for sqlite file name and schema name)
 SERVICE_NAME = 'sdc-login-ons'
@@ -21,6 +21,12 @@ app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('SQLALCHEMY_DATABASE_URI', 'sq
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 SCHEMA_NAME = None if app.config['SQLALCHEMY_DATABASE_URI'].startswith('sqlite') else '{}_{}'.format(ENVIRONMENT_NAME, SERVICE_NAME)
+
+if os.getenv('SQL_DEBUG') == 'true':
+    import logging
+    import sys
+    logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+    logging.getLogger('sqlalchemy.engine').setLevel(logging.DEBUG)
 
 
 # User model
@@ -174,7 +180,7 @@ def recreate_database():
     if SCHEMA_NAME:
         sql = ('DROP SCHEMA IF EXISTS "{0}" CASCADE;'
                'CREATE SCHEMA IF NOT EXISTS "{0}"'.format(SCHEMA_NAME))
-        event.listen(db.Model.metadata, 'before_create', DDL(sql))
+        db.engine.execute(sql)
     else:
         db.drop_all()
     db.create_all()
