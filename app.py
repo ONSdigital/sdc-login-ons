@@ -10,6 +10,7 @@ from sqlalchemy import Column, Integer, String
 # service name (initially used for sqlite file name and schema name)
 SERVICE_NAME = 'sdc-login-ons'
 ENVIRONMENT_NAME = os.getenv('ENVIRONMENT_NAME', 'dev')
+PORT = int(os.environ.get('PORT', 5003))
 
 app = Flask(__name__)
 
@@ -267,8 +268,5 @@ if __name__ == '__main__':
     print("End of setup")
 
     # Start server
-    print("Getting port...")
-    port = int(os.environ.get("PORT", 5000))
-    print("Port is " + str(port))
     print("running...")
-    app.run(debug=True, host='0.0.0.0', port=port)
+    app.run(debug=True, host='0.0.0.0', port=PORT)
